@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农历10.14 生日快乐！</title>
+    <style>
+        /* --- 全局样式设定 --- */
+        @import url('https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+            font-family: 'ZCOOL KuaiLe', 'Comic Sans MS', cursive, sans-serif; /* 使用圆润可爱的字体 */
+            overflow: hidden;
+            cursor: pointer; /* 暗示可以点击 */
+        }
+
+        /* --- 祝福卡片 --- */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 90%;
+            width: 350px;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- 标题样式 --- */
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #ffd3d3;
+        }
+
+        h2 {
+            color: #845ec2;
+            font-size: 1.5em;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        /* --- 纯CSS画的小蛋糕 --- */
+        .cake-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 30px auto;
+        }
+
+        .cake-body {
+            width: 100px;
+            height: 60px;
+            background: #ff9ff3;
+            border-radius: 10px 10px 5px 5px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .cake-body::before {
+            content: '';
+            width: 100%;
+            height: 15px;
+            background: #feca57; /* 夹心 */
+            position: absolute;
+            top: 25px;
+        }
+
+        .icing {
+            width: 110px;
+            height: 25px;
+            background: #fff;
+            border-radius: 20px;
+            position: absolute;
+            top: 35px;
+            left: -5px;
+            z-index: 2;
+        }
+
+        .candle {
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(to bottom, #ff9ff3, #54a0ff);
+            position: absolute;
+            top: 5px;
+            left: 46px;
+            z-index: 1;
+        }
+
+        .flame {
+            width: 12px;
+            height: 12px;
+            background: #ff6b6b;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -10px;
+            left: 44px;
+            animation: flicker 1s infinite alternate;
+            box-shadow: 0 0 10px #ff9f43;
+        }
+
+        /* --- 底部按钮 --- */
+        .btn {
+            background: #ff9ff3;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 159, 243, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background: #f368e0;
+        }
+
+        /* --- 动画关键帧 --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        /* --- 点击特效的表情 --- */
+        .emoji-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: rise 1.5s ease-out forwards;
+            font-size: 24px;
+            z-index: 5;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+
+        /* --- 提示文字 --- */
+        .hint {
+            position: absolute;
+            bottom: 20px;
+            color: white;
+            opacity: 0.7;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>🎂 Happy Birthday 🎂</h2>
+        <h1>农历 10.14</h1>
+        
+        <div class="cake-container">
+            <div class="flame"></div>
+            <div class="candle"></div>
+            <div class="icing"></div>
+            <div class="cake-body"></div>
+        </div>
+
+        <p class="subtitle">愿你每一天都像今天一样<br>闪闪发光，可可爱爱！✨</p>
+        
+        <button class="btn" onclick="celebrate()">收到祝福啦 (点我)</button>
+    </div>
+
+    <div class="hint">点击屏幕任意位置有惊喜哦 ~</div>
+
+    <script>
+        // 页面加载时的自动庆祝
+        window.onload = function() {
+            createConfetti();
+            setInterval(createFloatingEmoji, 800); // 每0.8秒自动冒出一个表情
+        };
+
+        // 点击屏幕任何地方的效果
+        document.body.addEventListener('click', function(e) {
+            createBurst(e.clientX, e.clientY);
+        });
+
+        // 按钮点击事件
+        function celebrate() {
+            for(let i=0; i<10; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 100);
+            }
+            alert("生日快乐！愿所有美好都如期而至！🎉");
+        }
+
+        // 随机产生表情包列表
+        const emojis = ['🎂', '🌸', '🍬', '🐰', '🎈', '❤️', '✨', '🎁', '🍓'];
+
+        // 在指定位置产生表情爆炸效果
+        function createBurst(x, y) {
+            for (let i = 0; i < 8; i++) {
+                const el = document.createElement('div');
+                el.classList.add('emoji-particle');
+                el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                
+                // 随机分散
+                const randomX = (Math.random() - 0.5) * 100;
+                const randomY = (Math.random() - 0.5) * 100 - 50; 
+                
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                
+                // 动态修改CSS变量以实现不同的飞出方向 (简单处理直接用JS改style)
+                el.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                
+                document.body.appendChild(el);
+                
+                // 动画结束后移除
+                setTimeout(() => el.remove(), 1500);
+            }
+        }
+
+        // 自动漂浮的背景表情
+        function createFloatingEmoji() {
+            const el = document.createElement('div');
+            el.classList.add('emoji-particle');
+            el.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            el.style.left = Math.random() * window.innerWidth + 'px';
+            el.style.top = window.innerHeight + 'px';
+            el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 4000);
+        }
+
+        // 简单的彩带撒花逻辑
+        function createConfetti() {
+            const colors = ['#ff9ff3', '#feca57', '#ff6b6b', '#48dbfb', '#1dd1a1'];
+            
+            for (let i = 0; i < 50; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'absolute';
+                conf.style.width = '8px';
+                conf.style.height = '8px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.left = Math.random() * window.innerWidth + 'px';
+                conf.style.top = -10 + 'px';
+                conf.style.borderRadius = '50%';
+                conf.style.zIndex = '1';
+                
+                // 随机动画
+                conf.animate([
+                    { transform: `translate(0, 0)` },
+                    { transform: `translate(${Math.random()*100 - 50}px, ${window.innerHeight}px)` }
+                ], {
+                    duration: Math.random() * 2000 + 1500,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }).onfinish = () => conf.remove();
+                
+                document.body.appendChild(conf);
+            }
+        }
+    </script>
+</body>
+</html>
